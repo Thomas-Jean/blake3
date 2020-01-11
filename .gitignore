@@ -4,7 +4,7 @@
 # The directory that rustler will write compiled artifacts to.
 /priv
 
-# The directory that rust will compile to for testing.
+# rust build dir.
 /native/blake3/target
 
 # If you run "mix test --cover", coverage assets end up here.
