@@ -1,8 +1,0 @@
-cargo:rustc-cfg=nif_version_2_7
-cargo:rustc-cfg=nif_version_2_8
-cargo:rustc-cfg=nif_version_2_9
-cargo:rustc-cfg=nif_version_2_10
-cargo:rustc-cfg=nif_version_2_11
-cargo:rustc-cfg=nif_version_2_12
-cargo:rustc-cfg=nif_version_2_13
-cargo:rustc-cfg=nif_version_2_14
