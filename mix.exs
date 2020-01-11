@@ -6,6 +6,7 @@ defmodule Blake3.MixProject do
       app: :blake3,
       version: "0.1.0",
       elixir: "~> 1.8",
+      build_embedded: Mix.env == :prod,
       start_permanent: Mix.env() == :prod,
       compilers: [:rustler] ++ Mix.compilers,
       rustler_crates: rustler_crates(), 
@@ -14,7 +15,7 @@ defmodule Blake3.MixProject do
   end
 
   defp rustler_crates do
-    [native_blake3: [
+    [blake3: [
       path: "native/blake3",
       mode: (if Mix.env() == :prod, do: :release, else: :debug)
     ]]

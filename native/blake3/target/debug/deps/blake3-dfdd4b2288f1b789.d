@@ -1,0 +1,12 @@
+/Users/thomasjean/dev/elixir/blake3/native/blake3/target/debug/deps/blake3-dfdd4b2288f1b789.rmeta: /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/lib.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/guts.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/avx2.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/platform.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/portable.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/sse41.rs
+
+/Users/thomasjean/dev/elixir/blake3/native/blake3/target/debug/deps/libblake3-dfdd4b2288f1b789.rlib: /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/lib.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/guts.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/avx2.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/platform.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/portable.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/sse41.rs
+
+/Users/thomasjean/dev/elixir/blake3/native/blake3/target/debug/deps/blake3-dfdd4b2288f1b789.d: /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/lib.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/guts.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/avx2.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/platform.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/portable.rs /Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/sse41.rs
+
+/Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/lib.rs:
+/Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/guts.rs:
+/Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/avx2.rs:
+/Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/platform.rs:
+/Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/portable.rs:
+/Users/thomasjean/.cargo/registry/src/github.com-1ecc6299db9ec823/blake3-0.1.0/src/sse41.rs:

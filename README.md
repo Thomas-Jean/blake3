@@ -1,6 +1,6 @@
 # Blake3
 ### Elixir Bindings for Rust Blake3 Implementation
-### WIP: currently only full hash works
+### WIP: hash, new, update, finalize currently work
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
@@ -18,3 +18,8 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/blake3](https://hexdocs.pm/_blake3).
 
+### TO DO:
+#### Tests
+#### Basic Docs
+#### Publish to Hex / Github release
+#### Support Keyed Hashes

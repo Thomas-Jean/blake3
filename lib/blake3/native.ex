@@ -1,12 +1,11 @@
 defmodule Blake3.Native do
-    use Rustler, otp_app: :blake3, crate: :native_blake3
+    use Rustler, otp_app: :blake3, crate: :blake3
 
 
-    def hash(), do: error()
-    # def new(), do: error()
-    # def update(), do: error()
-    # def finsh(), do: error()
-    # def info(), do: error()
+    def hash(str), do: error()
+    def new(), do: error()
+    def update(blakeRef, str), do: error()
+    def finalize(blakeRef), do: error()
   
     defp error, do: :erlang.nif_error(:nif_not_loaded)
 end

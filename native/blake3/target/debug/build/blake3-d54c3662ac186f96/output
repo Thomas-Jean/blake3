@@ -1,0 +1,16 @@
+cargo:rerun-if-env-changed=CC
+cargo:rerun-if-env-changed=CFLAGS
+cargo:rerun-if-changed=c/Makefile
+cargo:rerun-if-changed=c/blake3.h
+cargo:rerun-if-changed=c/blake3_dispatch.c
+cargo:rerun-if-changed=c/blake3_sse41.c
+cargo:rerun-if-changed=c/test.py
+cargo:rerun-if-changed=c/blake3_portable.c
+cargo:rerun-if-changed=c/blake3_neon.c
+cargo:rerun-if-changed=c/blake3_avx512.c
+cargo:rerun-if-changed=c/README.md
+cargo:rerun-if-changed=c/blake3_avx2.c
+cargo:rerun-if-changed=c/main.c
+cargo:rerun-if-changed=c/.gitignore
+cargo:rerun-if-changed=c/blake3.c
+cargo:rerun-if-changed=c/blake3_impl.h
