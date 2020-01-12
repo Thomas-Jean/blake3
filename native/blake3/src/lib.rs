@@ -25,8 +25,6 @@ mod atoms {
     rustler_atoms! {
         atom ok;
         atom error;
-        //atom __true__ = "true";
-        //atom __false__ = "false";
     }
 }
 
@@ -79,31 +77,3 @@ fn finalize<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     Ok((bin.release(env)).encode(env))
 
 }
-
-// fn get_platform_string(plat: Platform) -> String{
-//     "x86"
-// }
-
-// fn build_hash_info<'a>(hasher: blake3::Hasher) -> rustler::OwnedBinary{
-//     let bin: Vec<u8> = bincode::serialize(&hasher).unwrap()
-//     let mut bin_copy = types::OwnedBinary::new(bin.len()).unwrap();
-// //     let _ = bin_copy.as_mut_slice().write(&bin);
-
-// //     bin_copy
-// }
-
-// unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
-//     ::std::slice::from_raw_parts(
-//         (p as *const T) as *const u8,
-//         ::std::mem::size_of::<T>(),
-//     )
-// }
-
-
-// fn build_hasher(hash_info: HashInfo) -> blake3::Hasher {
-
-// }
-
-// fn return_string<'a>(env: Env<'a>, _args: &[Term<'a>]) -> NifResult<Term<'a>> {
-//     Ok((atoms::ok(), "Hello world!").encode(env))
-// }
