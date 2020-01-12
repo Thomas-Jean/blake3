@@ -1,6 +1,6 @@
 # Blake3
 Elixir bindings for the Rust Blake3 implementation.
-These bindings use `:rustler` to connect to the hashing functions.
+These bindings use [`:rustler`](https://github.com/rusterlium/rustler) to connect to the hashing functions.
 
 
 ## Installation
