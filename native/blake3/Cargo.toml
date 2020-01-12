@@ -1,7 +1,7 @@
 [package]
 name = "blake3"
 version = "0.1.0"
-authors = ["Thomas <thomas.jean486@gmail.com>"]
+authors = ["Thomas Jean <thomas.jean486@gmail.com>"]
 
 [lib]
 name = "blake3"
