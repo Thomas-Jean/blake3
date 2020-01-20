@@ -57,7 +57,7 @@ defmodule Blake3Test do
   end
 
   test "using a keyed function with a bad key returns an error" do
-    {:error, error } = Blake3.keyed_hash("key", "data")
+    {:error, error} = Blake3.keyed_hash("key", "data")
 
     assert error == "Error: Key must be 32 bytes"
   end
@@ -77,7 +77,6 @@ defmodule Blake3Test do
     assert digest1 !== digest2
   end
 
-
   test "hashing the same data with diffrent keys produce diffrent hashes" do
     key1 = Blake3.derive_key("boom")
     key2 = Blake3.derive_key("bang")
@@ -86,19 +85,17 @@ defmodule Blake3Test do
     digest2 = Blake3.keyed_hash(key2, "data")
 
     assert digest1 !== digest2
-
   end
 
   test "keyed hashes can also be pipelined" do
     hash =
-    Blake3.derive_key("zap")
-    |> Blake3.new_keyed()
-    |> Blake3.update("foo")
-    |> Blake3.update("bar")
-    |> Blake3.update("baz")
-    |> Blake3.finalize()
+      Blake3.derive_key("zap")
+      |> Blake3.new_keyed()
+      |> Blake3.update("foo")
+      |> Blake3.update("bar")
+      |> Blake3.update("baz")
+      |> Blake3.finalize()
 
-  assert is_binary(hash)
-
+    assert is_binary(hash)
   end
 end

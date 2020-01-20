@@ -69,13 +69,13 @@ defmodule Blake3 do
   the given context and key. for more information: [crate](https://github.com/BLAKE3-team/BLAKE3#the-blake3-crate)
   """
   def derive_key(context, key) do
-    Native.derive_key(context,key)
+    Native.derive_key(context, key)
   end
 
   @doc """
   same as `derive_key/2` but uses an empty string for context
   """
   def derive_key(key) do
-    Native.derive_key("",key)
+    Native.derive_key("", key)
   end
 end
