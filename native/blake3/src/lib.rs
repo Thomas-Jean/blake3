@@ -16,7 +16,10 @@ rustler_export_nifs!(
     [("hash", 1, hash),
     ("new",0, new),
     ("update",2,update),
-    ("finalize",1,finalize)],
+    ("finalize",1,finalize),
+    ("derive_key",2,derive_key),
+    ("keyed_hash",2,keyed_hash),
+    ("new_keyed",1,new_keyed)],
     Some(on_load)
 );
 
@@ -75,5 +78,47 @@ fn finalize<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let _ = bin.as_mut_slice().write(hash_bytes);
 
     Ok((bin.release(env)).encode(env))
+
+}
+
+fn derive_key<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    let context : &str = args[0].decode()?;
+    let input_key : types::Binary = args[1].decode()?;
+
+    let mut key = [0; 32];
+    blake3::derive_key(context, &input_key, &mut key);
+
+    let mut bin = types::OwnedBinary::new(key.len()).unwrap();
+    let _ = bin.as_mut_slice().write(&key);
+
+    Ok((bin.release(env)).encode(env))
+}
+
+fn keyed_hash<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    let key : types::Binary = args[0].decode()?;
+    let buf : types::Binary = args[1].decode()?;
+
+    let mut key_bytes = [0; 32];
+    let _ = key_bytes.copy_from_slice(key.as_slice());
+
+    let hash = blake3::keyed_hash(&key_bytes, &buf);
+    let hash_bytes = hash.as_bytes();
+
+    let mut bin = types::OwnedBinary::new(hash_bytes.len()).unwrap();
+    let _ = bin.as_mut_slice().write(hash_bytes);
+
+    Ok((bin.release(env)).encode(env))
+
+}
+
+fn new_keyed<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    let key : types::Binary = args[0].decode()?;
+
+    let mut key_bytes = [0; 32];
+    let _ = key_bytes.copy_from_slice(key.as_slice());
+
+    let hasher = ResourceArc::new(HasherResource(Mutex::new(blake3::Hasher::new_keyed(&key_bytes))));
+    
+    Ok((hasher).encode(env))
 
 }

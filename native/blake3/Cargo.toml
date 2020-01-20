@@ -1,6 +1,6 @@
 [package]
 name = "blake3"
-version = "0.1.0"
+version = "0.1.2"
 authors = ["Thomas Jean <thomas.jean486@gmail.com>"]
 
 [lib]
@@ -12,4 +12,4 @@ crate_type = ["cdylib"]
 rustler = ">=0.20.0"
 rustler_codegen = ">=0.20.0"
 bincode = ">=1.2.0"
-blake3 = ">=0.1.0"
+blake3 = ">=0.1.2"

@@ -10,6 +10,11 @@ defmodule Blake3.Native do
   def new(), do: error()
   def update(_state, _str), do: error()
   def finalize(_state), do: error()
+  def derive_key(_context, _key), do: error()
+  def keyed_hash(_key, _str), do: error()
+  def new_keyed(_key), do: error()
+
+
 
   defp error, do: :erlang.nif_error(:nif_not_loaded)
 end
