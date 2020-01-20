@@ -32,6 +32,3 @@ run `mix deps.get` and `mix deps.compile` to pull and build the bindings
 ```
 
 Documentation can found at [https://hexdocs.pm/blake3](https://hexdocs.pm/blake3).
-
-### TO DO:
-#### Support Keyed Hashes
