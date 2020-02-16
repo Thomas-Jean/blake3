@@ -98,4 +98,17 @@ defmodule Blake3Test do
 
     assert is_binary(hash)
   end
+
+  test "hashers can be reset" do
+    hash1 = Blake3.hash("data")
+
+    hash2 =
+      Blake3.new
+      |> Blake3.update("a string that won't affect the results because reset will be called")
+      |> Blake3.reset
+      |> Blake3.update("data")
+      |> Blake3.finalize
+    
+    assert hash1 == hash2
+  end
 end

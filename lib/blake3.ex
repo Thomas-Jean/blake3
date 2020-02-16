@@ -78,4 +78,11 @@ defmodule Blake3 do
   def derive_key(key) do
     Native.derive_key("", key)
   end
+
+  @doc """
+  reset a hasher to the default stat like when calling Blake3.new
+  """
+  def reset(state) do
+    Native.reset(state)
+  end
 end

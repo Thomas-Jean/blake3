@@ -19,7 +19,8 @@ rustler_export_nifs!(
     ("finalize",1,finalize),
     ("derive_key",2,derive_key),
     ("keyed_hash",2,keyed_hash),
-    ("new_keyed",1,new_keyed)],
+    ("new_keyed",1,new_keyed),
+    ("reset",1,reset)],
     Some(on_load)
 );
 
@@ -53,7 +54,6 @@ fn new<'a>(env: Env<'a>, _args: &[Term<'a>]) -> NifResult<Term<'a>> {
     
     Ok((hasher).encode(env))
 }
-
 
 fn update<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let resource: ResourceArc<HasherResource> = args[0].decode()?;
@@ -121,4 +121,13 @@ fn new_keyed<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     
     Ok((hasher).encode(env))
 
+}
+
+fn reset<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    let resource: ResourceArc<HasherResource> = args[0].decode()?;
+
+    let mut hasher = resource.0.try_lock().unwrap();
+    let _ = hasher.reset();
+
+    Ok((resource).encode(env))
 }
