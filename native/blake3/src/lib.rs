@@ -8,7 +8,6 @@ use rustler::resource::ResourceArc;
 use std::io::Write;
 use std::sync::Mutex;
 
-
 pub struct HasherResource(Mutex<blake3::Hasher>);
 
 rustler_export_nifs!(
@@ -16,6 +15,7 @@ rustler_export_nifs!(
     [("hash", 1, hash),
     ("new",0, new),
     ("update",2,update),
+    ("update_with_join",2,update_with_join),
     ("finalize",1,finalize),
     ("derive_key",2,derive_key),
     ("keyed_hash",2,keyed_hash),
@@ -130,4 +130,22 @@ fn reset<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
     let _ = hasher.reset();
 
     Ok((resource).encode(env))
+}
+
+fn update_with_join<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
+    let resource: ResourceArc<HasherResource> = args[0].decode()?;
+    let buf : types::Binary = args[1].decode()?;
+
+
+    let mut hasher = resource.0.try_lock().unwrap();
+    #[cfg(feature = "rayon")]{
+        hasher.update_with_join::<blake3::join::RayonJoin>(&buf);
+    }
+
+    #[cfg(not(feature = "rayon"))]{
+        hasher.update_with_join::<blake3::join::SerialJoin>(&buf);
+    }
+
+    Ok((resource).encode(env))
+
 }

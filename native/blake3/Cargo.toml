@@ -3,6 +3,15 @@ name = "blake3"
 version = "0.2.1"
 authors = ["Thomas Jean <thomas.jean486@gmail.com>"]
 
+[features]
+
+default = ["blake3/default"]
+c = ["blake3/c"]
+c_neon = ["blake3/c_neon"]
+std = ["blake3/std"]
+rayon = ["blake3/rayon"]
+
+
 [lib]
 name = "blake3"
 path = "src/lib.rs"

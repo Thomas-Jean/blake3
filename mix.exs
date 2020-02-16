@@ -1,4 +1,4 @@
-defmodule Blake3.MixProject do
+defmodule MixBlake3.Project do
   use Mix.Project
 
   def project do
@@ -48,11 +48,43 @@ defmodule Blake3.MixProject do
     [
       blake3: [
         path: "native/blake3",
-        mode: rustc_mode(Mix.env())
+        mode: rustc_mode(Mix.env()),
+        default_features: default_features?(),
+        features: config_features()
       ]
     ]
   end
 
   defp rustc_mode(:prod), do: :release
   defp rustc_mode(_), do: :debug
+
+  defp default_features? do
+    simd = Application.get_env(:blake3, :simd_mode) || System.get_env("BLAKE3_SIMD_MODE")
+    rayon = Application.get_env(:blake3, :rayon) || System.get_env("BLAKE3_RAYON")
+
+    case {simd, rayon} do
+      {nil, nil} -> true
+      _ -> false
+    end
+  end
+
+  defp config_features() do
+    simd =
+      case Application.get_env(:blake3, :simd_mode) || System.get_env("BLAKE3_SIMD_MODE") do
+        "c" -> "c"
+        :c -> "c"
+        "c_neon" -> "c_neon"
+        :c_neon -> "c_neon"
+        _ -> "std"
+      end
+
+    rayon =
+      case Application.get_env(:blake3, :rayon) || System.get_env("BLAKE3_RAYON") do
+        "true" -> "rayon"
+        true -> "rayon"
+        _ -> nil
+      end
+
+    Enum.filter([simd, rayon], fn x -> x !== nil end)
+  end
 end

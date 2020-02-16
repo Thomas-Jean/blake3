@@ -85,4 +85,14 @@ defmodule Blake3 do
   def reset(state) do
     Native.reset(state)
   end
+
+  @doc """
+  updates state with the potential to multithreading. The rayon
+  feature needs to be enabled and the input need to be large enough.
+  for more information see:
+  [comment](https://github.com/BLAKE3-team/BLAKE3/blob/fdd329ba57896faac4ae797775c175ad880cbe42/src/lib.rs#L948-L981)
+  """
+  def update_with_join(state, data) do
+    Native.update_with_join(state, data)
+  end
 end
