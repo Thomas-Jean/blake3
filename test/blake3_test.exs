@@ -111,4 +111,14 @@ defmodule Blake3Test do
     
     assert hash1 == hash2
   end
+
+  test "update_with_join can be used inplace of update" do
+    hasher = Blake3.new()
+
+    Blake3.update_with_join(hasher, "foo")
+    Blake3.update_with_join(hasher, "bar")
+    Blake3.update_with_join(hasher, "baz")
+
+    assert is_binary(Blake3.finalize(hasher))
+  end
 end
