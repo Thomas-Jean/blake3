@@ -4,7 +4,7 @@ defmodule MixBlake3.Project do
   def project do
     [
       app: :blake3,
-      version: "0.3.0",
+      version: "0.4.0",
       elixir: "~> 1.8",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -71,10 +71,10 @@ defmodule MixBlake3.Project do
   defp config_features() do
     simd =
       case Application.get_env(:blake3, :simd_mode) || System.get_env("BLAKE3_SIMD_MODE") do
-        "c" -> "c"
-        :c -> "c"
-        "c_neon" -> "c_neon"
-        :c_neon -> "c_neon"
+        "c_neon" -> "neon"
+        :c_neon -> "neon"
+        "neon" -> "neon"
+        :neon -> "neon"
         _ -> "std"
       end
 

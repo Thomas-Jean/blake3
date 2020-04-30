@@ -1,13 +1,12 @@
 [package]
 name = "blake3"
-version = "0.2.1"
+version = "0.3.3"
 authors = ["Thomas Jean <thomas.jean486@gmail.com>"]
 
 [features]
 
 default = ["blake3/default"]
-c = ["blake3/c"]
-c_neon = ["blake3/c_neon"]
+neon = ["blake3/neon"]
 std = ["blake3/std"]
 rayon = ["blake3/rayon"]
 
@@ -21,4 +20,4 @@ crate_type = ["cdylib"]
 rustler = ">=0.20.0"
 rustler_codegen = ">=0.20.0"
 bincode = ">=1.2.0"
-blake3 = ">=0.2.1"
+blake3 = ">=0.3.3"
