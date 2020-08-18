@@ -50,8 +50,8 @@ version = "0.3.3"
 dependencies = [
  "bincode 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "blake3 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustler 0.21.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustler_codegen 0.21.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustler 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustler_codegen 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -264,18 +264,18 @@ dependencies = [
 
 [[package]]
 name = "rustler"
-version = "0.21.0"
+version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustler_codegen 0.21.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustler_sys 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustler_codegen 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustler_sys 2.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "which 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "rustler_codegen"
-version = "0.21.0"
+version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "heck 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -286,10 +286,10 @@ dependencies = [
 
 [[package]]
 name = "rustler_sys"
-version = "2.0.0"
+version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "unreachable 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "unreachable 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -347,7 +347,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "unreachable"
-version = "0.1.1"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "void 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -400,9 +400,9 @@ dependencies = [
 "checksum rayon-core 1.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "08a89b46efaf957e52b18062fb2f4660f8b8a4dde1807ca002690868ef2c85a9"
 "checksum rustc-demangle 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)" = "4c691c0e608126e00913e33f0ccf3727d5fc84573623b8d65b2df340b5201783"
 "checksum rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "138e3e0acb6c9fb258b19b67cb8abd63c00679d2851805ea151465464fe9030a"
-"checksum rustler 0.21.0 (registry+https://github.com/rust-lang/crates.io-index)" = "087d812084e88e84d09ad05abebb24e2967b287ddfa692296f742bcf3e403f93"
-"checksum rustler_codegen 0.21.0 (registry+https://github.com/rust-lang/crates.io-index)" = "62d5150810c3a06997d644cacfd0d9464441aae1d46e0bdf66cef67d379fa443"
-"checksum rustler_sys 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3e2c6dd78a5cffd4294c4aca568522736b8a67f0e8ccdb6a55354dc933726bc4"
+"checksum rustler 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)" = "533dc3379a0f166749ce262a941e9b52ce19c3208729fc6b6cce76aea76d939b"
+"checksum rustler_codegen 0.21.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a21563a1c4b02773f5c6dce723630c9998694258ff4d67bd6025ba057a29b51c"
+"checksum rustler_sys 2.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "9fb96034ff33723615fd19223d58c987c1f6476342e83557a6e467ef95f83bda"
 "checksum scopeguard 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
 "checksum semver 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "1d7eb9ef2c18661902cc47e535f9bc51b78acd254da71d375c2f6720d9a40403"
 "checksum semver-parser 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "388a1df253eca08550bef6c72392cfe7c30914bf41df5269b68cbd6ff8f570a3"
@@ -412,6 +412,6 @@ dependencies = [
 "checksum typenum 1.11.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6d2783fe2d6b8c1101136184eb41be8b1ad379e4657050b8aaff0c79ee7575f9"
 "checksum unicode-segmentation 1.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e83e153d1053cbb5a118eeff7fd5be06ed99153f00dbcd8ae310c5fb2b22edc0"
 "checksum unicode-xid 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "fc72304796d0818e357ead4e000d19c9c174ab23dc11093ac919054d20a6a7fc"
-"checksum unreachable 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "1f2ae5ddb18e1c92664717616dd9549dde73f539f01bd7b77c2edb2446bdff91"
+"checksum unreachable 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "382810877fe448991dfc7f0dd6e3ae5d58088fd0ea5e35189655f84e6814fa56"
 "checksum void 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6a02e4885ed3bc0f2de90ea6dd45ebcbb66dacffe03547fadbb0eeae2770887d"
 "checksum which 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b57acb10231b9493c8472b20cb57317d0679a49e0bdbee44b3b803a6473af164"
