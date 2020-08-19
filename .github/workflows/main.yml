@@ -16,9 +16,12 @@ jobs:
         pair:
           - erlang: 21.x
             elixir: 1.x
+          - erlang: 22.x
+            elixir: 1.x
 
         rust:
           - 1.41.0
+          - stable
     steps:
       - name: Checkout sources
         uses: actions/checkout@v1
