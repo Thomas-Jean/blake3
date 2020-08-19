@@ -18,6 +18,6 @@ crate_type = ["cdylib"]
 
 [dependencies]
 rustler = ">=0.21.1"
-rustler_codegen = ">=0.20.0"
+rustler_codegen = ">=0.21.1"
 bincode = ">=1.2.0"
 blake3 = ">=0.3.3"
