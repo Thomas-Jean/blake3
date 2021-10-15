@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.5.0 (unreleased)
+
+- Enhancements
+
+  - updated blake3 version to 1.0.0
+  - updated rustler to 0.22.1
+  - refactored Rust crate to use the rustler::nif macro
+
+- Breaking changes
+
+  - `update_with_join` has been replacted with `update_rayon` to reflect the
+     same change in the upstream `blake3` crate. This function is only available
+     when the `rayon` feature flag is enabled, and will panic otherwise.
+
+
 ## v0.4.0
 
 - Enhancements

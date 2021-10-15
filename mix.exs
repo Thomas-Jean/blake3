@@ -4,12 +4,10 @@ defmodule MixBlake3.Project do
   def project do
     [
       app: :blake3,
-      version: "0.4.1",
+      version: "0.5.0",
       elixir: "~> 1.8",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      compilers: [:rustler] ++ Mix.compilers(),
-      rustler_crates: rustler_crates(),
       deps: deps(),
       docs: docs(),
       package: package()
@@ -44,46 +42,21 @@ defmodule MixBlake3.Project do
     ]
   end
 
-  defp rustler_crates do
-    [
-      blake3: [
-        path: "native/blake3",
-        mode: rustc_mode(Mix.env()),
-        default_features: default_features?(),
-        features: config_features()
-      ]
-    ]
-  end
-
-  defp rustc_mode(:prod), do: :release
-  defp rustc_mode(_), do: :debug
-
-  defp default_features? do
-    simd = Application.get_env(:blake3, :simd_mode) || System.get_env("BLAKE3_SIMD_MODE")
-    rayon = Application.get_env(:blake3, :rayon) || System.get_env("BLAKE3_RAYON")
-
-    case {simd, rayon} do
-      {nil, nil} -> true
-      _ -> false
-    end
-  end
-
-  defp config_features() do
+  def config_features() do
     simd =
       case Application.get_env(:blake3, :simd_mode) || System.get_env("BLAKE3_SIMD_MODE") do
         "c_neon" -> "neon"
         :c_neon -> "neon"
         "neon" -> "neon"
         :neon -> "neon"
-        _ -> "std"
-      end
-
-    rayon =
-      case Application.get_env(:blake3, :rayon) || System.get_env("BLAKE3_RAYON") do
-        "true" -> "rayon"
-        true -> "rayon"
         _ -> nil
       end
+
+    rayon = if !is_nil(Application.get_env(:blake3, :rayon) || System.get_env("BLAKE3_RAYON")) do
+      "rayon"
+    else
+      nil
+    end
 
     Enum.filter([simd, rayon], fn x -> x !== nil end)
   end

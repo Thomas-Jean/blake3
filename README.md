@@ -12,7 +12,7 @@ The package can be installed by adding `blake3` to your list of dependencies in 
 ```elixir
 def deps do
   [
-    {:blake3, "~> 0.4.1"}
+    {:blake3, "~> 0.5.0"}
   ]
 end
 ```
@@ -21,7 +21,7 @@ run `mix deps.get` and `mix deps.compile` to pull and build the bindings
 
 ## Configuration
 
-There are feature options in the rust implementation that allow for additional SIMD instructions and multithreading. They can be set though environment variable or `Mix.Config`. 
+There are feature options in the rust implementation that allow for additional SIMD instructions and multithreading. They can be set though environment variable or `Mix.Config`.
 
 ```shell
 export BLAKE3_SIMD_MODE=neon

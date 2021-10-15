@@ -1,8 +1,14 @@
 defmodule Blake3Test do
   use ExUnit.Case
 
-  test "hashes a string produces a binary" do
+  test "hashing a string produces a binary" do
     assert is_binary(Blake3.hash("foobarbaz"))
+  end
+
+  test "hashing a string produces a known good hash" do
+    hash1 = Blake3.hash("The quick brown fox jumps over the lazy dog")
+    hash2 = Base.decode16!("2f1514181aadccd913abd94cfa592701a5686ab23f8df1dff1b74710febc6d4a", case: :lower)
+    assert hash1 == hash2
   end
 
   test "hashing the same string produces the same hash" do
@@ -12,7 +18,7 @@ defmodule Blake3Test do
     assert hash1 == hash2
   end
 
-  test "hashing diffrent strings produces diffrent hashes" do
+  test "hashing diffrent strings produces different hashes" do
     hash1 = Blake3.hash("foobarbaz")
     hash2 = Blake3.hash("java.lang.OutOfMemoryError")
 
@@ -77,7 +83,7 @@ defmodule Blake3Test do
     assert digest1 !== digest2
   end
 
-  test "hashing the same data with diffrent keys produce diffrent hashes" do
+  test "hashing the same data with different keys produce different hashes" do
     key1 = Blake3.derive_key("boom")
     key2 = Blake3.derive_key("bang")
 
@@ -112,13 +118,17 @@ defmodule Blake3Test do
     assert hash1 == hash2
   end
 
-  test "update_with_join can be used inplace of update" do
+  test "update_rayon can be used instead of update (needs rayon feature enabled)" do
     hasher = Blake3.new()
 
-    Blake3.update_with_join(hasher, "foo")
-    Blake3.update_with_join(hasher, "bar")
-    Blake3.update_with_join(hasher, "baz")
+    Blake3.update_rayon(hasher, "foo")
+    Blake3.update_rayon(hasher, "bar")
+    Blake3.update_rayon(hasher, "baz")
 
-    assert is_binary(Blake3.finalize(hasher))
+    hash1 = Blake3.finalize(hasher)
+    hash2 = Blake3.hash("foobarbaz")
+
+    assert is_binary(hash1)
+    assert hash1 == hash2
   end
 end
