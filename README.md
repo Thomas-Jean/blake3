@@ -54,4 +54,9 @@ When changing configuration you will need to call `mix deps.compile` to enable t
 #"a74bb4d1d4e44d0a2981d131762f45db9a211313d8e9f2cd151b4e673a35a6c1"
 ```
 
+## Supported Elixir / Erlang / Rust
+
+We follow Rustler itself, supporting latest three minor Elixir versions and major OTP versions.
+As for Rust itself, we only support stable.
+
 Documentation can found at [https://hexdocs.pm/blake3](https://hexdocs.pm/blake3).

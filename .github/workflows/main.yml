@@ -5,23 +5,25 @@ on:
     branches: ["*"]
 
 env:
-  BLAKE3_RAYON: "true"
+  MIX_ENV: test
 
 jobs:
   test:
-    name: OTP ${{matrix.pair.otp}} / Elixir ${{matrix.pair.elixir}} / Rust ${{matrix.rust}}
-    runs-on: ubuntu-latest
+    name: OTP ${{ matrix.otp }} / Elixir ${{ matrix.elixir }} / Rust ${{ matrix.rust }}
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        pair:
-          - otp: 25.x
-            elixir: 1.14.x
-          - orp: 20.x
-            elixir: 1.8.x
+        elixir: ["1.12", "1.13", "1.14"]
+        otp: ["23", "24", "25"]
+        rust: ["stable"]
+        exclude:
+          - elixir: "1.14"
+            otp: "24"
+          - elixir: "1.13"
+            otp: "25"
+          - elixir: "1.12"
+            otp: "25"
 
-        rust:
-          - 1.41.0
-          - stable
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -43,6 +45,16 @@ jobs:
           key: deps-cache-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('**/mix.lock') }}
           restore-keys: |
             deps-cache-${{ matrix.elixir }}-${{ matrix.otp }}-
+      - name: Cache Rust deps
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ matrix.rust }}-cargo-
       - name: Install elixir dependencies
         run: mix do local.hex --force, local.rebar --force, deps.get
       - name: Check code formatting

@@ -8,7 +8,6 @@ defmodule Blake3 do
 
   @type hasher :: reference()
 
-
   @doc """
   computes a message digest for the given data
   """

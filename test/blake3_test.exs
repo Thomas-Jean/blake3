@@ -7,7 +7,12 @@ defmodule Blake3Test do
 
   test "hashing a string produces a known good hash" do
     hash1 = Blake3.hash("The quick brown fox jumps over the lazy dog")
-    hash2 = Base.decode16!("2f1514181aadccd913abd94cfa592701a5686ab23f8df1dff1b74710febc6d4a", case: :lower)
+
+    hash2 =
+      Base.decode16!("2f1514181aadccd913abd94cfa592701a5686ab23f8df1dff1b74710febc6d4a",
+        case: :lower
+      )
+
     assert hash1 == hash2
   end
 
