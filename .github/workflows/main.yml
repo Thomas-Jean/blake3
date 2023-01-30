@@ -2,43 +2,56 @@ name: CI
 
 on:
   push:
-    branches: [master]
-    tags: ["*"]
-  pull_request:
     branches: ["*"]
+
+env:
+  BLAKE3_RAYON: "true"
 
 jobs:
   test:
-    name: OTP ${{matrix.pair.erlang}} / Elixir ${{matrix.pair.elixir}} / Rust ${{matrix.rust}}
+    name: OTP ${{matrix.pair.otp}} / Elixir ${{matrix.pair.elixir}} / Rust ${{matrix.rust}}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         pair:
-          - erlang: 21.x
-            elixir: 1.x
-          - erlang: 22.x
-            elixir: 1.x
+          - otp: 25.x
+            elixir: 1.14.x
+          - orp: 20.x
+            elixir: 1.8.x
 
         rust:
           - 1.41.0
           - stable
     steps:
-      - name: Checkout sources
-        uses: actions/checkout@v1
-
-      - name: Install Erlang/Elixir
-        uses: actions/setup-elixir@v1.0.0
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - uses: erlef/setup-beam@v1
         with:
-          otp-version: ${{matrix.pair.erlang}}
-          elixir-version: ${{matrix.pair.elixir}}
-
-      - name: Install Rust ${{matrix.rust}} toolchain
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+      - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: ${{matrix.rust}}
+          toolchain: ${{ matrix.rust }}
           override: true
-
-      - name: Run Tests
-        run: |
-          mix deps.get
-          mix test
+      - name: Cache Elixir deps
+        uses: actions/cache@v3
+        with:
+          path: |
+            deps
+            _build
+          key: deps-cache-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            deps-cache-${{ matrix.elixir }}-${{ matrix.otp }}-
+      - name: Install elixir dependencies
+        run: mix do local.hex --force, local.rebar --force, deps.get
+      - name: Check code formatting
+        run: mix format --check-formatted
+      - name: Compile dependencies
+        run: mix deps.compile
+      - name: Compile code (warnings as errors)
+        run: mix compile --warnings-as-errors
+      - name: Run tests
+        run: mix test
+      - name: Create docs
+        run: mix docs

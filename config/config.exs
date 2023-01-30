@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :blake3, Blake3.Native,
   mode: :release,

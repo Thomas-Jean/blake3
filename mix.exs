@@ -4,7 +4,7 @@ defmodule MixBlake3.Project do
   def project do
     [
       app: :blake3,
-      version: "0.5.0",
+      version: "0.0.0+development",
       elixir: "~> 1.8",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -23,13 +23,13 @@ defmodule MixBlake3.Project do
       description: "Elixir binding for the Rust Blake3 implementation",
       files: ["lib", "native", ".formatter.exs", "README*", "LICENSE*", "mix.exs"],
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/Thomas-Jean/blake3"}
+      links: %{"GitHub" => "https://github.com/juulSme/blake3"}
     ]
   end
 
   defp deps do
     [
-      {:rustler, "~> 0.22.2"},
+      {:rustler, "0.27.0"},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
   end
@@ -38,7 +38,7 @@ defmodule MixBlake3.Project do
     [
       extras: ["README.md"],
       main: "readme",
-      source_url: "https://github.com/Thomas-Jean/blake3"
+      source_url: "https://github.com/juulSme/blake3"
     ]
   end
 
@@ -52,12 +52,13 @@ defmodule MixBlake3.Project do
         _ -> nil
       end
 
-    rayon = if !is_nil(Application.get_env(:blake3, :rayon) || System.get_env("BLAKE3_RAYON")) do
-      "rayon"
-    else
-      nil
-    end
+    rayon =
+      if !is_nil(Application.get_env(:blake3, :rayon) || System.get_env("BLAKE3_RAYON")) do
+        "rayon"
+      else
+        nil
+      end
 
-    Enum.filter([simd, rayon], fn x -> x !== nil end)
+    Enum.reject([simd, rayon], &is_nil/1)
   end
 end

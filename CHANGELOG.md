@@ -1,5 +1,16 @@
 # Changelog
 
+## DEVELOPMENT
+
+- Enhancements
+
+  - updated blake3 version to 1.3.3
+  - updated rustler to 0.27.0
+
+- Other
+  - fix CI
+  - version injection
+
 ## v0.5.0 (unreleased)
 
 - Enhancements
@@ -11,9 +22,8 @@
 - Breaking changes
 
   - `update_with_join` has been replacted with `update_rayon` to reflect the
-     same change in the upstream `blake3` crate. This function is only available
-     when the `rayon` feature flag is enabled, and will panic otherwise.
-
+    same change in the upstream `blake3` crate. This function is only available
+    when the `rayon` feature flag is enabled, and will panic otherwise.
 
 ## v0.4.0
 

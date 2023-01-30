@@ -1,7 +1,6 @@
 [package]
 name = "blake3"
-version = "0.4.0"
-authors = ["Thomas Jean <thomas.jean486@gmail.com>"]
+version = "0.0.0+development"
 
 [features]
 default = ["blake3/default", "blake3/rayon"]
@@ -14,7 +13,7 @@ path = "src/lib.rs"
 crate_type = ["cdylib"]
 
 [dependencies]
-rustler = "0.22.2"
-rustler_codegen = "0.22.2"
-bincode = "1.3.3"
-blake3 = "1.0.0"
+rustler = "0.27.0"
+rustler_codegen = "0.27.0"
+bincode = "1.3"
+blake3 = "1.0"

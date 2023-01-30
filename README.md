@@ -12,7 +12,7 @@ The package can be installed by adding `blake3` to your list of dependencies in 
 ```elixir
 def deps do
   [
-    {:blake3, "~> 0.5.0"}
+    {:blake3, "~> 0.0.0+development"}
   ]
 end
 ```
@@ -36,8 +36,8 @@ config :blake3,
    rayon: :true
 ```
 
-* `neon` enables ARM NEON support
-* `rayon` enables Rayon-based multithreading
+- `neon` enables ARM NEON support
+- `rayon` enables Rayon-based multithreading
 
 When changing configuration you will need to call `mix deps.compile` to enable the features.
 
