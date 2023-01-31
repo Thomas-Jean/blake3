@@ -23,7 +23,7 @@ defmodule MixBlake3.Project do
       description: "Elixir binding for the Rust Blake3 implementation",
       files: ["lib", "native", ".formatter.exs", "README*", "LICENSE*", "mix.exs"],
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/juulSme/blake3"}
+      links: %{"GitHub" => "https://github.com/Thomas-Jean/blake3"}
     ]
   end
 
@@ -38,7 +38,7 @@ defmodule MixBlake3.Project do
     [
       extras: ["README.md"],
       main: "readme",
-      source_url: "https://github.com/juulSme/blake3"
+      source_url: "https://github.com/Thomas-Jean/blake3"
     ]
   end
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## DEVELOPMENT
+## v0.6.0
 
 - Enhancements
 
@@ -8,8 +8,9 @@
   - updated rustler to 0.22.2
 
 - Other
+  - add github actions release workflow
   - fix CI
-  - version injection
+  - Release version injection
 
 ## v0.5.0 (unreleased)
 
