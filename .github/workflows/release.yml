@@ -1,0 +1,52 @@
+name: Release
+on:
+  release:
+    types: [released]
+
+jobs:
+  release:
+    name: Publish release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display build environment
+        run: printenv
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set version in readme
+        uses: weareyipyip/set-version-action@v2
+        with:
+          source: tag
+          file_path: README.md
+      - name: Set version in mix.exs
+        uses: weareyipyip/set-version-action@v2
+        with:
+          source: tag
+          file_path: mix.exs
+      - name: Set version in Cargo.toml
+        uses: weareyipyip/set-version-action@v2
+        with:
+          source: tag
+          file_path: native/blake3/Cargo.toml
+      - name: Set version in Cargo.lock
+        uses: weareyipyip/set-version-action@v2
+        with:
+          source: tag
+          file_path: native/blake3/Cargo.lock
+
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "25"
+          elixir-version: "1.14"
+      - name: Install dependencies
+        run: mix do local.hex --force, local.rebar --force, deps.get
+
+      - name: Compile code
+        run: mix compile
+      - name: Create docs
+        run: mix docs
+      - name: Publish release
+        run: mix hex.publish --yes
+        env:
+          HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
