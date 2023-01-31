@@ -5,7 +5,7 @@
 - Enhancements
 
   - updated blake3 version to 1.3.3
-  - updated rustler to 0.27.0
+  - updated rustler to 0.22.2
 
 - Other
   - fix CI
