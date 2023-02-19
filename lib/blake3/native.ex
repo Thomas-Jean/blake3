@@ -4,12 +4,13 @@ defmodule Blake3.Native do
   This module doesn't need to be called direcly.
   """
 
-  use Rustler, otp_app: :blake3, crate: :blake3
+  use Rustler,
+    otp_app: :blake3
 
   def hash(_str), do: error()
   def new(), do: error()
   def update(_state, _str), do: error()
-  def update_with_join(_state, _str), do: error()
+  def update_rayon(_state, _str), do: error()
   def finalize(_state), do: error()
   def derive_key(_context, _key), do: error()
   def keyed_hash(_key, _str), do: error()

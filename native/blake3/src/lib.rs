@@ -1,151 +1,145 @@
-#[macro_use] extern crate rustler;
+#[macro_use]
+extern crate rustler;
 extern crate rustler_codegen;
 
 extern crate blake3;
 
-use rustler::{Env, Term, NifResult, Encoder, types};
 use rustler::resource::ResourceArc;
+use rustler::{types, Binary, Env, Error, NifResult, OwnedBinary, Term};
 use std::io::Write;
 use std::sync::Mutex;
 
 pub struct HasherResource(Mutex<blake3::Hasher>);
 
-rustler_export_nifs!(
-    "Elixir.Blake3.Native", 
-    [("hash", 1, hash),
-    ("new",0, new),
-    ("update",2,update),
-    ("update_with_join",2,update_with_join),
-    ("finalize",1,finalize),
-    ("derive_key",2,derive_key),
-    ("keyed_hash",2,keyed_hash),
-    ("new_keyed",1,new_keyed),
-    ("reset",1,reset)],
-    Some(on_load)
+rustler::init!(
+    "Elixir.Blake3.Native",
+    [
+        hash,
+        new,
+        update,
+        finalize,
+        derive_key,
+        keyed_hash,
+        new_keyed,
+        reset,
+        update_rayon
+    ],
+    load = on_load
 );
 
-
-mod atoms {
-    rustler_atoms! {
-        atom ok;
-        atom error;
-    }
-}
-
 fn on_load(env: Env, _info: Term) -> bool {
-    resource_struct_init!(HasherResource, env);
+    resource!(HasherResource, env);
     true
 }
 
-fn hash<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let buf : types::Binary = args[0].decode()?;
+mod atoms {
+    rustler::atoms! {
+        ok,
+        error,
+    }
+}
+
+#[rustler::nif]
+fn hash<'a>(env: Env<'a>, buf: Binary) -> NifResult<Binary<'a>> {
     let hash = blake3::hash(&buf);
     let hash_bytes = hash.as_bytes();
 
-    let mut bin = types::OwnedBinary::new(hash_bytes.len()).unwrap();
+    let mut bin = OwnedBinary::new(hash_bytes.len()).ok_or(Error::Term(Box::new("no mem")))?;
     let _ = bin.as_mut_slice().write(hash_bytes);
 
-    Ok((bin.release(env)).encode(env))
-
+    Ok(bin.release(env))
 }
 
-fn new<'a>(env: Env<'a>, _args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let hasher = ResourceArc::new(HasherResource(Mutex::new(blake3::Hasher::new())));
-    
-    Ok((hasher).encode(env))
+#[rustler::nif]
+fn new() -> ResourceArc<HasherResource> {
+    ResourceArc::new(HasherResource(Mutex::new(blake3::Hasher::new())))
 }
 
-fn update<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let resource: ResourceArc<HasherResource> = args[0].decode()?;
-    let buf : types::Binary = args[1].decode()?;
+#[rustler::nif]
+fn update(resource: ResourceArc<HasherResource>, buf: Binary) -> ResourceArc<HasherResource> {
+    {
+        let mut hasher = resource.0.try_lock().unwrap();
+        hasher.update(&buf);
+    }
 
-
-    let mut hasher = resource.0.try_lock().unwrap();
-    hasher.update(&buf);
-
-    Ok((resource).encode(env))
-
+    resource
 }
 
-fn finalize<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let resource: ResourceArc<HasherResource> = args[0].decode()?;
-
+#[rustler::nif]
+fn finalize<'a>(env: Env<'a>, resource: ResourceArc<HasherResource>) -> NifResult<Binary<'a>> {
     let hasher = resource.0.try_lock().unwrap();
-    let hash: blake3::Hash = hasher.finalize();
-    let hash_bytes = hash.as_bytes();
+    let hash_: blake3::Hash = hasher.finalize();
+    let hash_bytes = hash_.as_bytes();
 
-    let mut bin = types::OwnedBinary::new(hash_bytes.len()).unwrap();
+    let mut bin =
+        types::OwnedBinary::new(hash_bytes.len()).ok_or(Error::Term(Box::new("no mem")))?;
     let _ = bin.as_mut_slice().write(hash_bytes);
 
-    Ok((bin.release(env)).encode(env))
-
+    Ok(bin.release(env))
 }
 
-fn derive_key<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let context : &str = args[0].decode()?;
-    let input_key : types::Binary = args[1].decode()?;
+#[rustler::nif]
+fn derive_key<'a>(env: Env<'a>, context: &str, input_key: Binary) -> NifResult<Binary<'a>> {
+    let key = blake3::derive_key(context, &input_key);
 
-    let mut key = [0; 32];
-    blake3::derive_key(context, &input_key, &mut key);
-
-    let mut bin = types::OwnedBinary::new(key.len()).unwrap();
+    let mut bin = types::OwnedBinary::new(key.len()).ok_or(Error::Term(Box::new("no mem")))?;
     let _ = bin.as_mut_slice().write(&key);
 
-    Ok((bin.release(env)).encode(env))
+    Ok(bin.release(env))
 }
 
-fn keyed_hash<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let key : types::Binary = args[0].decode()?;
-    let buf : types::Binary = args[1].decode()?;
+#[rustler::nif]
+fn keyed_hash<'a>(env: Env<'a>, key: Binary, buf: Binary) -> NifResult<Binary<'a>> {
+    let mut key_bytes: [u8; 32] = [0; 32];
+    key_bytes.copy_from_slice(key.as_slice());
 
-    let mut key_bytes = [0; 32];
-    let _ = key_bytes.copy_from_slice(key.as_slice());
-
-    let hash = blake3::keyed_hash(&key_bytes, &buf);
-    let hash_bytes = hash.as_bytes();
+    let hash_ = blake3::keyed_hash(&key_bytes, &buf);
+    let hash_bytes = hash_.as_bytes();
 
     let mut bin = types::OwnedBinary::new(hash_bytes.len()).unwrap();
     let _ = bin.as_mut_slice().write(hash_bytes);
 
-    Ok((bin.release(env)).encode(env))
-
+    Ok(bin.release(env))
 }
 
-fn new_keyed<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let key : types::Binary = args[0].decode()?;
-
+#[rustler::nif]
+fn new_keyed<'a>(key: Binary) -> ResourceArc<HasherResource> {
     let mut key_bytes = [0; 32];
-    let _ = key_bytes.copy_from_slice(key.as_slice());
+    key_bytes.copy_from_slice(key.as_slice());
 
-    let hasher = ResourceArc::new(HasherResource(Mutex::new(blake3::Hasher::new_keyed(&key_bytes))));
-    
-    Ok((hasher).encode(env))
-
+    ResourceArc::new(HasherResource(Mutex::new(blake3::Hasher::new_keyed(
+        &key_bytes,
+    ))))
 }
 
-fn reset<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let resource: ResourceArc<HasherResource> = args[0].decode()?;
+#[rustler::nif]
+fn reset<'a>(resource: ResourceArc<HasherResource>) -> ResourceArc<HasherResource> {
+    {
+        let mut hasher = resource.0.try_lock().unwrap();
+        let _ = hasher.reset();
+    }
 
-    let mut hasher = resource.0.try_lock().unwrap();
-    let _ = hasher.reset();
-
-    Ok((resource).encode(env))
+    resource
 }
 
-fn update_with_join<'a>(env: Env<'a>, args: &[Term<'a>]) -> NifResult<Term<'a>> {
-    let resource: ResourceArc<HasherResource> = args[0].decode()?;
-    let buf : types::Binary = args[1].decode()?;
-
-
-    let mut hasher = resource.0.try_lock().unwrap();
-    #[cfg(feature = "rayon")]{
-        hasher.update_with_join::<blake3::join::RayonJoin>(&buf);
+#[cfg(feature = "rayon")]
+#[rustler::nif]
+fn update_rayon<'a>(
+    resource: ResourceArc<HasherResource>,
+    buf: Binary,
+) -> ResourceArc<HasherResource> {
+    {
+        let mut hasher = resource.0.try_lock().unwrap();
+        hasher.update_rayon(&buf);
     }
+    resource
+}
 
-    #[cfg(not(feature = "rayon"))]{
-        hasher.update_with_join::<blake3::join::SerialJoin>(&buf);
-    }
-
-    Ok((resource).encode(env))
-
+#[cfg(not(feature = "rayon"))]
+#[rustler::nif]
+fn update_rayon<'a>(
+    _resource: ResourceArc<HasherResource>,
+    _buf: Binary,
+) -> ResourceArc<HasherResource> {
+    panic!("Blake3.update_rayon() called without rayon feature enabled");
 }

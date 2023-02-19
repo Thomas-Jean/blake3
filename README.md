@@ -12,7 +12,7 @@ The package can be installed by adding `blake3` to your list of dependencies in 
 ```elixir
 def deps do
   [
-    {:blake3, "~> 0.4.1"}
+    {:blake3, "~> 0.0.0+development"}
   ]
 end
 ```
@@ -21,7 +21,7 @@ run `mix deps.get` and `mix deps.compile` to pull and build the bindings
 
 ## Configuration
 
-There are feature options in the rust implementation that allow for additional SIMD instructions and multithreading. They can be set though environment variable or `Mix.Config`. 
+There are feature options in the rust implementation that allow for additional SIMD instructions and multithreading. They can be set though environment variable or `Mix.Config`.
 
 ```shell
 export BLAKE3_SIMD_MODE=neon
@@ -36,8 +36,8 @@ config :blake3,
    rayon: :true
 ```
 
-* `neon` enables ARM NEON support
-* `rayon` enables Rayon-based multithreading
+- `neon` enables ARM NEON support
+- `rayon` enables Rayon-based multithreading
 
 When changing configuration you will need to call `mix deps.compile` to enable the features.
 
@@ -53,5 +53,10 @@ When changing configuration you will need to call `mix deps.compile` to enable t
 > Blake3.hash("boom") |> Base.encode16(case: :lower)
 #"a74bb4d1d4e44d0a2981d131762f45db9a211313d8e9f2cd151b4e673a35a6c1"
 ```
+
+## Supported Elixir / Erlang / Rust
+
+We follow Rustler itself, supporting latest three minor Elixir versions and major OTP versions.
+As for Rust itself, we only support stable.
 
 Documentation can found at [https://hexdocs.pm/blake3](https://hexdocs.pm/blake3).
