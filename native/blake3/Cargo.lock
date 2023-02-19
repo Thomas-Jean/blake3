@@ -31,7 +31,7 @@ dependencies = [
 
 [[package]]
 name = "blake3"
-version = "0.0.0+development"
+version = "1.0.0"
 dependencies = [
  "bincode",
  "blake3 1.3.3",

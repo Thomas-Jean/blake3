@@ -1,6 +1,6 @@
 [package]
 name = "blake3"
-version = "0.0.0+development"
+version = "1.0.0"
 
 [features]
 default = ["blake3/default", "blake3/rayon"]

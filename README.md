@@ -12,7 +12,7 @@ The package can be installed by adding `blake3` to your list of dependencies in 
 ```elixir
 def deps do
   [
-    {:blake3, "~> 0.0.0+development"}
+    {:blake3, "~> 1.0.0"}
   ]
 end
 ```
