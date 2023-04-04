@@ -14,27 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set version in readme
-        uses: weareyipyip/set-version-action@v2
-        with:
-          source: tag
-          file_path: README.md
-      - name: Set version in mix.exs
-        uses: weareyipyip/set-version-action@v2
-        with:
-          source: tag
-          file_path: mix.exs
-      - name: Set version in Cargo.toml
-        uses: weareyipyip/set-version-action@v2
-        with:
-          source: tag
-          file_path: native/blake3/Cargo.toml
-      - name: Set version in Cargo.lock
-        uses: weareyipyip/set-version-action@v2
-        with:
-          source: tag
-          file_path: native/blake3/Cargo.lock
-
       - uses: erlef/setup-beam@v1
         with:
           otp-version: "25"
