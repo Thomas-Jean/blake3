@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.1
+
+- Fixes
+  - support Apple ARM hardware
+
 ## v1.0.0
 
 - Enhancements
