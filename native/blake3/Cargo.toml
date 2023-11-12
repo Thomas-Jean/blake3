@@ -13,7 +13,7 @@ path = "src/lib.rs"
 crate_type = ["cdylib"]
 
 [dependencies]
-rustler = "0.22"
-rustler_codegen = "0.22"
+rustler = "0.30"
+rustler_codegen = "0.30"
 bincode = "1.3"
 blake3 = "1.0"
