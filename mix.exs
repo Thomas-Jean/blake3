@@ -4,8 +4,8 @@ defmodule MixBlake3.Project do
   def project do
     [
       app: :blake3,
-      version: "1.0.1",
-      elixir: "~> 1.9",
+      version: "1.0.2",
+      elixir: "~> 1.13",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
