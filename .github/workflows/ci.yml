@@ -6,7 +6,7 @@ on:
 
 env:
   MIX_ENV: test
-
+  BLAKE3_BUILD: true
 jobs:
   test:
     name: OTP ${{ matrix.otp }} / Elixir ${{ matrix.elixir }} / Rust ${{ matrix.rust }}
