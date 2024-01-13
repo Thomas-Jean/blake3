@@ -1,10 +1,13 @@
 defmodule MixBlake3.Project do
   use Mix.Project
 
+  @source_url "https://github.com/Thomas-Jean/blake3"
+  @version "1.0.2"
+
   def project do
     [
       app: :blake3,
-      version: "1.0.2",
+      version: @version,
       elixir: "~> 1.13",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -21,15 +24,24 @@ defmodule MixBlake3.Project do
   defp package() do
     [
       description: "Elixir binding for the Rust Blake3 implementation",
-      files: ["lib", "native", ".formatter.exs", "README*", "LICENSE*", "mix.exs"],
+      files: [
+        "lib",
+        "native",
+        ".formatter.exs",
+        "README*",
+        "LICENSE*",
+        "mix.exs",
+        "checksum-*.exs"
+      ],
       licenses: ["Apache-2.0"],
-      links: %{"GitHub" => "https://github.com/Thomas-Jean/blake3"}
+      links: %{"GitHub" => @source_url}
     ]
   end
 
   defp deps do
     [
-      {:rustler, "~> 0.30"},
+      {:rustler_precompiled, "~> 0.7.0"},
+      {:rustler, "~> 0.30", optional: true},
       {:ex_doc, "~> 0.21", only: [:dev, :test], runtime: false}
     ]
   end
@@ -38,7 +50,7 @@ defmodule MixBlake3.Project do
     [
       extras: ["README.md"],
       main: "readme",
-      source_url: "https://github.com/Thomas-Jean/blake3"
+      source_url: @source_url
     ]
   end
 
